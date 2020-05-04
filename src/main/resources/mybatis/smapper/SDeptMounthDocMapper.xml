@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.electronic.dao.smapper.interfaces.SDeptMonthDocMapper">
+    <resultMap id="BaseResultMap" type="com.electronic.dao.smapper.bo.SDeptElectronicDoc">
+        <result column="count" property="count" jdbcType="INTEGER"/>
+        <result column="months" property="months" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--/*select  month(operate_time) as months ,count(1) as count from dept_electronic_doc
+    where year(operate_time) = #{year}
+    group by month (operate_time)*/-->
+    <select id="selectCountByMonth" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select date_format( operate_time, "%d" )  as months, count( * ) as count from dept_electronic_doc
+        where date_format( operate_time, "%Y%m" ) = #{year,jdbcType=VARCHAR}
+        group by date_format( operate_time , "%d" )
+  </select>
+
+
+</mapper>

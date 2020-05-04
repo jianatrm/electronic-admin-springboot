@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.electronic.dao.mapper.interfaces.WorkNodeMapper" >
+  <resultMap id="BaseResultMap" type="com.electronic.dao.mapper.bo.WorkNode" >
+    <id column="node_id" property="nodeId" jdbcType="INTEGER" />
+    <result column="work_order_id" property="workOrderId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="node_order" property="nodeOrder" jdbcType="INTEGER" />
+    <result column="node_operate_status" property="nodeOperateStatus" jdbcType="INTEGER" />
+    <result column="node_operate_time" property="nodeOperateTime" jdbcType="TIMESTAMP" />
+    <result column="node_operate_result" property="nodeOperateResult" jdbcType="INTEGER" />
+    <result column="node_operate_desc" property="nodeOperateDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    node_id, work_order_id, user_id, node_order, node_operate_status, node_operate_time, 
+    node_operate_result, node_operate_desc
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.electronic.dao.mapper.bo.WorkNodeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from work_node
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from work_node
+    where node_id = #{nodeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from work_node
+    where node_id = #{nodeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.electronic.dao.mapper.bo.WorkNodeExample" >
+    delete from work_node
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.electronic.dao.mapper.bo.WorkNode" >
+    <selectKey resultType="java.lang.Integer" keyProperty="nodeId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into work_node (work_order_id, user_id, node_order, 
+      node_operate_status, node_operate_time, node_operate_result, 
+      node_operate_desc)
+    values (#{workOrderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{nodeOrder,jdbcType=INTEGER}, 
+      #{nodeOperateStatus,jdbcType=INTEGER}, #{nodeOperateTime,jdbcType=TIMESTAMP}, #{nodeOperateResult,jdbcType=INTEGER}, 
+      #{nodeOperateDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.electronic.dao.mapper.bo.WorkNode" >
+    <selectKey resultType="java.lang.Integer" keyProperty="nodeId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into work_node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="workOrderId != null" >
+        work_order_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="nodeOrder != null" >
+        node_order,
+      </if>
+      <if test="nodeOperateStatus != null" >
+        node_operate_status,
+      </if>
+      <if test="nodeOperateTime != null" >
+        node_operate_time,
+      </if>
+      <if test="nodeOperateResult != null" >
+        node_operate_result,
+      </if>
+      <if test="nodeOperateDesc != null" >
+        node_operate_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="workOrderId != null" >
+        #{workOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="nodeOrder != null" >
+        #{nodeOrder,jdbcType=INTEGER},
+      </if>
+      <if test="nodeOperateStatus != null" >
+        #{nodeOperateStatus,jdbcType=INTEGER},
+      </if>
+      <if test="nodeOperateTime != null" >
+        #{nodeOperateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nodeOperateResult != null" >
+        #{nodeOperateResult,jdbcType=INTEGER},
+      </if>
+      <if test="nodeOperateDesc != null" >
+        #{nodeOperateDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.electronic.dao.mapper.bo.WorkNodeExample" resultType="java.lang.Integer" >
+    select count(*) from work_node
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update work_node
+    <set >
+      <if test="record.nodeId != null" >
+        node_id = #{record.nodeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.workOrderId != null" >
+        work_order_id = #{record.workOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.nodeOrder != null" >
+        node_order = #{record.nodeOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.nodeOperateStatus != null" >
+        node_operate_status = #{record.nodeOperateStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.nodeOperateTime != null" >
+        node_operate_time = #{record.nodeOperateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.nodeOperateResult != null" >
+        node_operate_result = #{record.nodeOperateResult,jdbcType=INTEGER},
+      </if>
+      <if test="record.nodeOperateDesc != null" >
+        node_operate_desc = #{record.nodeOperateDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update work_node
+    set node_id = #{record.nodeId,jdbcType=INTEGER},
+      work_order_id = #{record.workOrderId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      node_order = #{record.nodeOrder,jdbcType=INTEGER},
+      node_operate_status = #{record.nodeOperateStatus,jdbcType=INTEGER},
+      node_operate_time = #{record.nodeOperateTime,jdbcType=TIMESTAMP},
+      node_operate_result = #{record.nodeOperateResult,jdbcType=INTEGER},
+      node_operate_desc = #{record.nodeOperateDesc,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.electronic.dao.mapper.bo.WorkNode" >
+    update work_node
+    <set >
+      <if test="workOrderId != null" >
+        work_order_id = #{workOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="nodeOrder != null" >
+        node_order = #{nodeOrder,jdbcType=INTEGER},
+      </if>
+      <if test="nodeOperateStatus != null" >
+        node_operate_status = #{nodeOperateStatus,jdbcType=INTEGER},
+      </if>
+      <if test="nodeOperateTime != null" >
+        node_operate_time = #{nodeOperateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nodeOperateResult != null" >
+        node_operate_result = #{nodeOperateResult,jdbcType=INTEGER},
+      </if>
+      <if test="nodeOperateDesc != null" >
+        node_operate_desc = #{nodeOperateDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where node_id = #{nodeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.electronic.dao.mapper.bo.WorkNode" >
+    update work_node
+    set work_order_id = #{workOrderId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      node_order = #{nodeOrder,jdbcType=INTEGER},
+      node_operate_status = #{nodeOperateStatus,jdbcType=INTEGER},
+      node_operate_time = #{nodeOperateTime,jdbcType=TIMESTAMP},
+      node_operate_result = #{nodeOperateResult,jdbcType=INTEGER},
+      node_operate_desc = #{nodeOperateDesc,jdbcType=VARCHAR}
+    where node_id = #{nodeId,jdbcType=INTEGER}
+  </update>
+</mapper>
