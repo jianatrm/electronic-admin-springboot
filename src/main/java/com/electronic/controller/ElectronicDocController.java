@@ -41,7 +41,7 @@ public class ElectronicDocController {
     }
 
     /*
-    添加ElectronicDoc
+    添加个人文档
      */
     @RequestMapping("addElectronicDoc")
     public BaseResponse addElectronicDoc(@RequestBody ElectronicDocRequest docRequest) throws Exception {
@@ -55,6 +55,19 @@ public class ElectronicDocController {
         return baseResponse;
     }
 
+    /*
+    * 添加部门文档*/
+    @RequestMapping("addDeptElectronicDoc")
+    public BaseResponse addDeptElectronicDoc(@RequestBody ElectronicDocRequest docRequest) throws Exception {
+        String docList = docRequest.getElectronicDocList();
+        if (StringUtils.isEmpty(docList)){
+            return new BaseResponse(BusinessConstants.BUSI_FAILURE,BusinessConstants.BUSI_FAILURE_CODE,BusinessConstants.BUSI_FAILURE_MESSAGE);
+        }
+        SessionUser sessionUser = SessionUtils.getSessionUser();
+        docRequest.setDeptId(sessionUser.getDeptId());
+        BaseResponse baseResponse = ElectronicDocService.addDeptElectronicDoc(docRequest);
+        return baseResponse;
+    }
 
 
     /*

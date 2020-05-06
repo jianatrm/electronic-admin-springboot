@@ -74,6 +74,31 @@ public class ElectronicDocServiceImpl implements ElectronicDocService {
     }
 
     @Override
+    public BaseResponse addDeptElectronicDoc(ElectronicDocRequest docRequest) throws Exception {
+        BaseResponse baseResponse = new BaseResponse(BusinessConstants.BUSI_SUCCESS,BusinessConstants.BUSI_SUCCESS_CODE,BusinessConstants.BUSI_SUCCESS_MESSAGE);
+
+        String docList = docRequest.getElectronicDocList();
+        if (StringUtils.isEmpty(docList)){
+            return new BaseResponse(BusinessConstants.BUSI_FAILURE,BusinessConstants.BUSI_FAILURE_CODE,BusinessConstants.BUSI_FAILURE_MESSAGE);
+        }
+        List<ElectronicDoc> docs = JSONObject.parseArray(docList, ElectronicDoc.class);
+        for (ElectronicDoc doc:docs){
+            doc.setOperateId(docRequest.getOperateId());
+            doc.setOperateTime(new Date());
+            doc.setStatus(UserConstants.S_VALID_STATUS);
+            docMapper.insertSelective(doc);
+            UserElectronicDoc userElectronicDoc = new UserElectronicDoc();
+            userElectronicDoc.setDocId(doc.getDocId());
+            userElectronicDoc.setUserId(docRequest.getOperateId());
+            userElectronicDoc.setOperateId(docRequest.getOperateId());
+            userElectronicDoc.setOperateTime(new Date());
+            userElectronicDoc.setStatus(UserConstants.VALID_STATUS);
+            userElectronicDocMapper.insert(userElectronicDoc);
+        }
+        return baseResponse;
+    }
+
+    @Override
     public Integer updateElectronicDoc(ElectronicDoc doc) throws Exception {
         doc.setOperateTime(new Date());
         int updateByPrimaryKeySelective = docMapper.updateByPrimaryKeySelective(doc);

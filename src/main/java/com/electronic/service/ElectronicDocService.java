@@ -12,6 +12,9 @@ public interface ElectronicDocService {
 
     public BaseResponse addElectronicDoc( ElectronicDocRequest docRequest) throws Exception;
 
+
+    public BaseResponse addDeptElectronicDoc( ElectronicDocRequest docRequest) throws Exception;
+
     public Integer updateElectronicDoc(ElectronicDoc doc) throws Exception;
 
     public BaseResponse<PageResult<SUserElectronicDoc>> queryElectronicDoc(ElectronicDocRequest docRequest) throws Exception;

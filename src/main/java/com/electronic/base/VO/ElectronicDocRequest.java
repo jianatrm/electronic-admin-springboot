@@ -5,6 +5,8 @@ import java.util.Date;
 public class ElectronicDocRequest {
     private Integer userId;
 
+    private Integer deptId;
+
     private Integer docId;
 
     private String docName;
@@ -23,6 +25,14 @@ public class ElectronicDocRequest {
     private Integer pageNum = 1;
 
     private Integer pageSize =10;
+
+    public Integer getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Integer deptId) {
+        this.deptId = deptId;
+    }
 
     public String getDocType() {
         return docType;
