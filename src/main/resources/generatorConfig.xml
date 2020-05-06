@@ -38,7 +38,7 @@
 
 		<!-- targetProject:mapper映射文件生成的位置 -->
 		<sqlMapGenerator targetPackage="mybatis.mapper"
-						 targetProject="/Users/tianrimin/program/web/vue/electronic-admin/src/resources/mybatis/mapper">
+						 targetProject="/Users/tianrimin/program/web/vue/electronic-admin/src/main/resources/">
 			<!-- enableSubPackages:是否让schema作为包的后缀 -->
 			<property name="enableSubPackages" value="false" />
 		</sqlMapGenerator>
@@ -89,8 +89,8 @@
 		 <table schema="" tableName="">
 			<columnOverride column="" javaType="" />
 		</table> -->
-		<table schema="" tableName="work_carbon">
-			<generatedKey column="carbon_id" sqlStatement="MySql" identity="true"/>
+		<table schema="" tableName="dept_electronic_doc">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
 		</table>
 	</context>
 </generatorConfiguration>

@@ -2,9 +2,8 @@ package com.electronic.dao.mapper.interfaces;
 
 import com.electronic.dao.mapper.bo.DeptElectronicDoc;
 import com.electronic.dao.mapper.bo.DeptElectronicDocExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface DeptElectronicDocMapper {
     int countByExample(DeptElectronicDocExample example);

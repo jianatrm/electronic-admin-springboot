@@ -65,6 +65,7 @@ public class ElectronicDocController {
         }
         SessionUser sessionUser = SessionUtils.getSessionUser();
         docRequest.setDeptId(sessionUser.getDeptId());
+        docRequest.setOperateId(sessionUser.getUserId());
         BaseResponse baseResponse = ElectronicDocService.addDeptElectronicDoc(docRequest);
         return baseResponse;
     }

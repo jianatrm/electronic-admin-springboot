@@ -17,6 +17,8 @@ public class DeptElectronicDoc {
 
     private Integer status;
 
+    private Integer operateType;
+
     public Integer getId() {
         return id;
     }
@@ -71,5 +73,13 @@ public class DeptElectronicDoc {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getOperateType() {
+        return operateType;
+    }
+
+    public void setOperateType(Integer operateType) {
+        this.operateType = operateType;
     }
 }

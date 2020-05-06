@@ -6,9 +6,11 @@ import com.electronic.base.PageResult;
 import com.electronic.base.VO.ElectronicDocRequest;
 import com.electronic.contants.BusinessConstants;
 import com.electronic.contants.UserConstants;
+import com.electronic.dao.mapper.bo.DeptElectronicDoc;
 import com.electronic.dao.mapper.bo.ElectronicDoc;
 import com.electronic.dao.mapper.bo.ElectronicDocExample;
 import com.electronic.dao.mapper.bo.UserElectronicDoc;
+import com.electronic.dao.mapper.interfaces.DeptElectronicDocMapper;
 import com.electronic.dao.mapper.interfaces.ElectronicDocMapper;
 import com.electronic.dao.mapper.interfaces.UserElectronicDocMapper;
 import com.electronic.dao.smapper.bo.SUserElectronicDoc;
@@ -33,6 +35,9 @@ public class ElectronicDocServiceImpl implements ElectronicDocService {
 
     @Autowired
     private UserElectronicDocMapper userElectronicDocMapper;
+
+    @Autowired
+    private DeptElectronicDocMapper deptElectronicDocMapper;
 
     @Autowired
     SUserElectronicDocMapper sUserElectronicDocMapper;
@@ -87,13 +92,14 @@ public class ElectronicDocServiceImpl implements ElectronicDocService {
             doc.setOperateTime(new Date());
             doc.setStatus(UserConstants.S_VALID_STATUS);
             docMapper.insertSelective(doc);
-            UserElectronicDoc userElectronicDoc = new UserElectronicDoc();
-            userElectronicDoc.setDocId(doc.getDocId());
-            userElectronicDoc.setUserId(docRequest.getOperateId());
-            userElectronicDoc.setOperateId(docRequest.getOperateId());
-            userElectronicDoc.setOperateTime(new Date());
-            userElectronicDoc.setStatus(UserConstants.VALID_STATUS);
-            userElectronicDocMapper.insert(userElectronicDoc);
+            DeptElectronicDoc deptElectronicDoc = new DeptElectronicDoc();
+            deptElectronicDoc.setDocId(doc.getDocId());
+            deptElectronicDoc.setDeptId(docRequest.getDeptId());
+            deptElectronicDoc.setOperateId(docRequest.getOperateId());
+            deptElectronicDoc.setOperateTime(new Date());
+            deptElectronicDoc.setStatus(UserConstants.VALID_STATUS);
+            deptElectronicDoc.setOperateType(UserConstants.DEPT_DOC_TYPE_DIRECT);
+            deptElectronicDocMapper.insertSelective(deptElectronicDoc);
         }
         return baseResponse;
     }
