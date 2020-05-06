@@ -1,3 +1,4 @@
+/*
 
 package com.electronic.service.impl;
 
@@ -72,9 +73,11 @@ public class PreviewServiceImpl implements PreviewService {
     return fileConvertResultDTO;
   }
 
+*/
 /**
    * 获取想要转换的格式类型
-   * @return*/
+   * @return*//*
+
 
 
   private String getTargetFileExt(String originFileExt){
@@ -92,3 +95,4 @@ public class PreviewServiceImpl implements PreviewService {
     }
   }
 }
+*/

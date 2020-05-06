@@ -3,6 +3,7 @@ package com.electronic.controller;
 import com.electronic.base.BaseResponse;
 import com.electronic.base.PageResult;
 import com.electronic.base.SessionUser;
+import com.electronic.base.VO.WorkCarbonVO;
 import com.electronic.base.VO.WorkNodeVO;
 import com.electronic.base.VO.WorkOrderVO;
 import com.electronic.contants.BusinessConstants;
@@ -77,8 +78,24 @@ public class WorkOrderController {
     @RequestMapping("/approverCarbonCopy")
     public BaseResponse approverCarbonCopy(@RequestBody WorkOrderVO workOrderVO) throws Exception {
 
-        BaseResponse workOrderVOBaseResponse = workOrderService.approveWorkOrder(workOrderVO);
+        BaseResponse workOrderVOBaseResponse = workOrderService.approverCarbonCopy(workOrderVO);
         return workOrderVOBaseResponse;
+    }
+
+    /*查看抄送数据*/
+    @RequestMapping("/queryApproverCarbonCopy")
+    public BaseResponse queryApproverCarbonCopy(@RequestBody WorkCarbonVO workCarbonVO) {
+        BaseResponse baseResponse = null;
+        try {
+            SessionUser sessionUser = SessionUtils.getSessionUser();
+            Integer userId = sessionUser.getUserId();
+            workCarbonVO.setUserId(userId);
+            baseResponse = workOrderService.queryApproverCarbonCopy(workCarbonVO);
+        } catch (Exception e) {
+            LOGGER.error("查询抄送数据报错 {}",e.getMessage());
+            e.printStackTrace();
+        }
+        return baseResponse;
     }
 
 }

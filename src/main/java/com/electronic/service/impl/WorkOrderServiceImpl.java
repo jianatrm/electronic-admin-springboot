@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.electronic.base.BaseResponse;
 import com.electronic.base.PageResult;
 import com.electronic.base.SessionUser;
+import com.electronic.base.VO.WorkCarbonVO;
 import com.electronic.base.VO.WorkNodeVO;
 import com.electronic.base.VO.WorkOrderVO;
 import com.electronic.contants.BusinessConstants;
@@ -46,6 +47,9 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 
     @Autowired
     private ElectronicDocMapper electronicDocMapper;
+
+    @Autowired
+    private WorkCarbonMapper workCarbonMapper;
 
     @Override
     public WorkOrder selectWorkOrder(WorkOrderVO workOrderVO) throws Exception {
@@ -244,16 +248,72 @@ public class WorkOrderServiceImpl implements WorkOrderService {
         if (null == workOrder){
             return new BaseResponse(BusinessConstants.BUSI_FAILURE,BusinessConstants.BUSI_FAILURE_CODE,"工单未找到");
         }
+
+        //更新当前工单
         workOrder.setCurrentNode(String.valueOf(Integer.parseInt(workOrderVO.getCurrentNode())+1));//更新当前节点为下一节点
         Integer nodeCount = workOrder.getNodeCount();
         workOrder.setNodeCount(nodeCount+1);
         workOrderMapper.updateByPrimaryKeySelective(workOrder);
-        WorkNode workNode = new WorkNode();
-        workNode.setWorkOrderId(workOrderVO.getWorkOrderId());
-        workNode.setUserId(0);
-        workNode.setNodeOrder(nodeCount+1);
-        workNode.setNodeOperateStatus(NodeConstants.NO_OPERATE);
-        nodeMapper.insert(workNode);
+
+        //更新节点信息
+        WorkNode node = workOrderVO.getWorkNode();
+        WorkNode workNode = nodeMapper.selectByPrimaryKey(node.getNodeId());
+        workNode.setNodeOperateStatus(NodeConstants.OPERATED);
+        workNode.setNodeOperateResult(node.getNodeOperateResult());
+        workNode.setNodeOperateDesc(node.getNodeOperateDesc());
+        workNode.setNodeOperateTime(new Date());
+        nodeMapper.updateByPrimaryKeySelective(workNode);
+
+        //添加新的节点信息
+        WorkNode wNode = new WorkNode();
+        wNode.setWorkOrderId(workOrderVO.getWorkOrderId());
+        wNode.setUserId(node.getUserId());
+        wNode.setNodeOrder(nodeCount+1);
+        wNode.setNodeOperateStatus(NodeConstants.TO_OPERATE);
+        nodeMapper.insert(wNode);
+        //添加抄送信息
+        String workCarbonList = workOrderVO.getWorkCarbonList();
+        if (!StringUtils.isEmpty(workCarbonList)){
+            List<WorkCarbon> workCarbons = JSONObject.parseArray(workCarbonList, WorkCarbon.class);
+            for (WorkCarbon workCarbon:workCarbons){
+                workCarbon.setWorkOrderId(workOrderVO.getWorkOrderId());
+                workCarbon.setCreateTime(new Date());
+                workCarbonMapper.insertSelective(workCarbon);
+            }
+        }
         return new BaseResponse(BusinessConstants.BUSI_SUCCESS,BusinessConstants.BUSI_SUCCESS_CODE,BusinessConstants.BUSI_SUCCESS_MESSAGE );
+    }
+
+    @Override
+    public BaseResponse queryApproverCarbonCopy(WorkCarbonVO workCarbonVO) throws Exception {
+        BaseResponse baseResponse = new BaseResponse(BusinessConstants.BUSI_SUCCESS, BusinessConstants.BUSI_SUCCESS_CODE, BusinessConstants.BUSI_SUCCESS_MESSAGE);
+
+        PageResult<WorkCarbonVO> pageResult = new PageResult<>();
+        //查询抄送数据
+        WorkCarbonExample workCarbonExample = new WorkCarbonExample();
+        WorkCarbonExample.Criteria criteria = workCarbonExample.createCriteria();
+        criteria.andUserIdEqualTo(workCarbonVO.getUserId());
+        PageHelper.startPage(workCarbonVO.getPageNum(),workCarbonVO.getPageSize());
+        List<WorkCarbon> workCarbonList = workCarbonMapper.selectByExample(workCarbonExample);
+        PageInfo pageInfo = new PageInfo(workCarbonList);
+
+        List<WorkCarbonVO> workCarbonVOS = new ArrayList<>();
+        for (int i = 0; i < workCarbonList.size(); i++) {
+            WorkCarbonVO carbonVO = new WorkCarbonVO();
+            BeanUtils.copyProperties(workCarbonList.get(i),carbonVO);
+            Integer workOrderId = workCarbonList.get(i).getWorkOrderId();
+            WorkOrder workOrder = workOrderMapper.selectByPrimaryKey(workOrderId);
+            WorkOrderVO work = new WorkOrderVO();
+            BeanUtils.copyProperties(workOrder, work);
+            work.setWorkOrderStatusDesc(WorkOrderConstants.getStatus(workOrder.getWorkOrderStatus()));
+            SysUser sysUser = sysUserMapper.selectByPrimaryKey(Integer.parseInt(workOrder.getOrganizer()));
+            work.setUserName(sysUser.getUserName());
+            carbonVO.setWorkOrderVO(work);
+            workCarbonVOS.add(carbonVO);
+        }
+        pageResult.setCount(pageInfo.getTotal());
+        pageResult.setResult(workCarbonVOS);
+        baseResponse.setResult(pageResult);
+        return baseResponse;
     }
 }

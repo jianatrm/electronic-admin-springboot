@@ -1,6 +1,7 @@
 package com.electronic.base.VO;
 
 import com.electronic.dao.mapper.bo.SysDept;
+import com.electronic.dao.mapper.bo.WorkCarbon;
 import com.electronic.dao.mapper.bo.WorkNode;
 
 import java.util.Date;
@@ -46,6 +47,16 @@ public class WorkOrderVO {
     private String userName;
 
     private String sysDeptList;
+
+    private String workCarbonList;
+
+    public String getWorkCarbonList() {
+        return workCarbonList;
+    }
+
+    public void setWorkCarbonList(String workCarbonList) {
+        this.workCarbonList = workCarbonList;
+    }
 
     public String getSysDeptList() {
         return sysDeptList;

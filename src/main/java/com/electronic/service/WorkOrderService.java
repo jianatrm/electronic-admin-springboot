@@ -2,6 +2,7 @@ package com.electronic.service;
 
 import com.electronic.base.BaseResponse;
 import com.electronic.base.PageResult;
+import com.electronic.base.VO.WorkCarbonVO;
 import com.electronic.base.VO.WorkOrderVO;
 import com.electronic.dao.mapper.bo.WorkOrder;
 
@@ -21,5 +22,7 @@ public interface WorkOrderService {
     public BaseResponse approveWorkOrder(WorkOrderVO workOrderVO) throws Exception;
 
     public BaseResponse approverCarbonCopy(WorkOrderVO workOrderVO) throws Exception;
+
+    public BaseResponse queryApproverCarbonCopy(WorkCarbonVO workCarbonVO) throws Exception;
 
 }
