@@ -111,7 +111,7 @@ public class WorkNodeServiceImpl implements WorkNodeService {
             nodeVO1.setWorkOrderVO(work);
             String organizer = workOrder.getOrganizer();
             SysUser sysUser = sysUserMapper.selectByPrimaryKey(Integer.parseInt(organizer));
-            nodeVO1.setUserName(sysUser.getUserName());
+            nodeVO1.setUserName(sysUser.getStaffName());
             list.add(nodeVO1);
         }
 

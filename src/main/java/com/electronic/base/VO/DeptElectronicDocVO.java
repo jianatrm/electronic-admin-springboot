@@ -18,6 +18,8 @@ public class DeptElectronicDocVO {
 
     private Date operateTime;
 
+    private Integer operateType;
+
     private Integer status;
 
     private Integer pageNum = 1;
@@ -25,6 +27,14 @@ public class DeptElectronicDocVO {
     private Integer pageSize =10;
 
     private ElectronicDoc electronicDoc;
+
+    public Integer getOperateType() {
+        return operateType;
+    }
+
+    public void setOperateType(Integer operateType) {
+        this.operateType = operateType;
+    }
 
     public Integer getWorkOrderId() {
         return workOrderId;

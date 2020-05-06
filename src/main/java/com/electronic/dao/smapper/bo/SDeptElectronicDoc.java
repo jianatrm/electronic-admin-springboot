@@ -7,6 +7,8 @@ public class SDeptElectronicDoc {
 
     private Integer workOrderId;
 
+    private Integer operateType;
+
     private String deptName;
 
     private Integer docId;
@@ -38,6 +40,14 @@ public class SDeptElectronicDoc {
     private Integer startSize;
 
     private Integer pageSize;
+
+    public Integer getOperateType() {
+        return operateType;
+    }
+
+    public void setOperateType(Integer operateType) {
+        this.operateType = operateType;
+    }
 
     public Integer getWorkOrderId() {
         return workOrderId;

@@ -51,7 +51,7 @@ public class UserController {
         sysUser.setUserName(userName);
         SysUser selectSysUser = sysUserService.selectSysUser(sysUser);
         if (selectSysUser!=null){
-            baseResponse.setResultMessage("用户名已存在");
+            baseResponse.setResultMessage("用户名已存在/或者真实姓名已存在");
             return baseResponse;
         }
 

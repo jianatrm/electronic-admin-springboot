@@ -50,7 +50,7 @@ public class WorkOrderController {
         return pageResultBaseResponse;
     }
 
-    //    查询待我审批工单
+    //    查询待我审批工单以及审批记录
     @RequestMapping("/queryWorkOrderToMe")
     public BaseResponse queryWorkOrderToMe(@RequestBody WorkNodeVO nodeVO) throws Exception {
         SessionUser sessionUser = SessionUtils.getSessionUser();

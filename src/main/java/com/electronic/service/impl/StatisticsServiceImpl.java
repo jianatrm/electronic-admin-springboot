@@ -144,7 +144,7 @@ public class StatisticsServiceImpl implements StatisticsService {
             for (int i = 0; i <sUserElectronicDocs.size() ; i++) {
                 Integer userId1 = sUserElectronicDocs.get(i).getUserId();
                 SysUser sysUser = sysUserMapper.selectByPrimaryKey(userId1);
-                sUserElectronicDocs.get(i).setUserName(sysUser==null?"":sysUser.getUserName());
+                sUserElectronicDocs.get(i).setUserName(sysUser==null?"":sysUser.getStaffName());
             }
         }
         pageResult.setResult(sUserElectronicDocs);

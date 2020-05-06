@@ -36,6 +36,16 @@ public class SDeptElectronicDocVO {
 
     private String months;
 
+    private Integer operateType;
+
+    public Integer getOperateType() {
+        return operateType;
+    }
+
+    public void setOperateType(Integer operateType) {
+        this.operateType = operateType;
+    }
+
     public Integer getWorkOrderId() {
         return workOrderId;
     }

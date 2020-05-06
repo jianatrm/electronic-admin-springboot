@@ -46,6 +46,11 @@ public class SysUserServiceImpl implements SysUserService {
             criteria.andUserNameEqualTo(user.getUserName());
         }
         criteria.andStatusEqualTo(UserConstants.VALID_STATUS);
+        if (!StringUtils.isBlank(user.getStaffName())){
+            SysUserExample.Criteria criteria1 = sysUserExample.createCriteria();
+            criteria1.andStaffNameEqualTo(user.getStaffName());
+            sysUserExample.or(criteria1);
+        }
         List<SysUser> sysUsers = sysUserMapper.selectByExample(sysUserExample);
         return CollectionUtils.isEmpty(sysUsers)? null:sysUsers.get(0);
     }

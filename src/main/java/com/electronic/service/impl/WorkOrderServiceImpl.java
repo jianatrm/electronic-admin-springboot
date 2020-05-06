@@ -151,7 +151,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
             BeanUtils.copyProperties(workNodes.get(i),workNodeVO);
             Integer userId = workNodes.get(i).getUserId();
             SysUser sysUser = sysUserMapper.selectByPrimaryKey(userId);
-            workNodeVO.setUserName(sysUser.getUserName());
+            workNodeVO.setUserName(sysUser.getStaffName());
 
             WorkCarbonExample workCarbonExample = new WorkCarbonExample();
             WorkCarbonExample.Criteria workCarbonExampleCriteria = workCarbonExample.createCriteria();
@@ -163,7 +163,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
                 WorkCarbonVO carbonVO = new WorkCarbonVO();
                 BeanUtils.copyProperties(workCarbonList.get(j),carbonVO);
                 SysUser sysUser1 = sysUserMapper.selectByPrimaryKey(carbonVO.getUserId());
-                carbonVO.setUserName(sysUser1.getUserName());
+                carbonVO.setUserName(sysUser1.getStaffName());
                 workCarbonVOS.add(carbonVO);
             }
             workNodeVO.setWorkCarbonVOList(workCarbonVOS);
@@ -177,7 +177,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
             orderVO.setWorkOrderStatusDesc(WorkOrderConstants.getStatus(orderVO.getWorkOrderStatus()));
             String organizer = orderVO.getOrganizer();
             SysUser sysUser = sysUserMapper.selectByPrimaryKey(Integer.parseInt(organizer));
-            orderVO.setUserName(sysUser.getUserName());
+            orderVO.setUserName(sysUser.getStaffName());
         }
         orderVO.setWorkNodeList(JSONObject.toJSONString(workNodeVOList));
         baseResponse.setResult(orderVO);
@@ -322,7 +322,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
             BeanUtils.copyProperties(workOrder, work);
             work.setWorkOrderStatusDesc(WorkOrderConstants.getStatus(workOrder.getWorkOrderStatus()));
             SysUser sysUser = sysUserMapper.selectByPrimaryKey(Integer.parseInt(workOrder.getOrganizer()));
-            work.setUserName(sysUser.getUserName());
+            work.setUserName(sysUser.getStaffName());
             carbonVO.setWorkOrderVO(work);
             workCarbonVOS.add(carbonVO);
         }
