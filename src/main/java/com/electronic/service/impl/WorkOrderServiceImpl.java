@@ -162,8 +162,8 @@ public class WorkOrderServiceImpl implements WorkOrderService {
             for (int j = 0; j < workCarbonList.size(); j++) {
                 WorkCarbonVO carbonVO = new WorkCarbonVO();
                 BeanUtils.copyProperties(workCarbonList.get(j),carbonVO);
-                SysUser sysUser1 = sysUserMapper.selectByPrimaryKey(Integer.parseInt(workOrder.getOrganizer()));
-                sysUser1.setUserName(sysUser.getUserName());
+                SysUser sysUser1 = sysUserMapper.selectByPrimaryKey(carbonVO.getUserId());
+                carbonVO.setUserName(sysUser1.getUserName());
                 workCarbonVOS.add(carbonVO);
             }
             workNodeVO.setWorkCarbonVOList(workCarbonVOS);

@@ -19,6 +19,15 @@ public class WorkCarbonVO {
 
     private Integer pageSize =10;
 
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     private WorkOrderVO workOrderVO;
 
