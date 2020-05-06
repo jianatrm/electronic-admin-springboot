@@ -153,6 +153,20 @@ public class WorkOrderServiceImpl implements WorkOrderService {
             SysUser sysUser = sysUserMapper.selectByPrimaryKey(userId);
             workNodeVO.setUserName(sysUser.getUserName());
 
+            WorkCarbonExample workCarbonExample = new WorkCarbonExample();
+            WorkCarbonExample.Criteria workCarbonExampleCriteria = workCarbonExample.createCriteria();
+            workCarbonExampleCriteria.andNodeIdEqualTo(workNodes.get(i).getNodeId());
+            List<WorkCarbon> workCarbonList = workCarbonMapper.selectByExample(workCarbonExample);
+
+            List<WorkCarbonVO> workCarbonVOS = new ArrayList<>();
+            for (int j = 0; j < workCarbonList.size(); j++) {
+                WorkCarbonVO carbonVO = new WorkCarbonVO();
+                BeanUtils.copyProperties(workCarbonList.get(j),carbonVO);
+                SysUser sysUser1 = sysUserMapper.selectByPrimaryKey(Integer.parseInt(workOrder.getOrganizer()));
+                sysUser1.setUserName(sysUser.getUserName());
+                workCarbonVOS.add(carbonVO);
+            }
+            workNodeVO.setWorkCarbonVOList(workCarbonVOS);
             workNodeVOList.add(workNodeVO);
         }
         criteria.andNodeOrderEqualTo(Integer.parseInt(workOrder.getCurrentNode()));
@@ -277,6 +291,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
             List<WorkCarbon> workCarbons = JSONObject.parseArray(workCarbonList, WorkCarbon.class);
             for (WorkCarbon workCarbon:workCarbons){
                 workCarbon.setWorkOrderId(workOrderVO.getWorkOrderId());
+                workCarbon.setNodeId(wNode.getNodeId());
                 workCarbon.setCreateTime(new Date());
                 workCarbonMapper.insertSelective(workCarbon);
             }

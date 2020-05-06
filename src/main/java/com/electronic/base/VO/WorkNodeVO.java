@@ -1,6 +1,7 @@
 package com.electronic.base.VO;
 
 import java.util.Date;
+import java.util.List;
 
 public class WorkNodeVO {
 
@@ -27,6 +28,16 @@ public class WorkNodeVO {
     private Integer pageSize =10;
 
     private String userName;
+
+    private List<WorkCarbonVO> workCarbonVOList;
+
+    public List<WorkCarbonVO> getWorkCarbonVOList() {
+        return workCarbonVOList;
+    }
+
+    public void setWorkCarbonVOList(List<WorkCarbonVO> workCarbonVOList) {
+        this.workCarbonVOList = workCarbonVOList;
+    }
 
     public WorkOrderVO getWorkOrderVO() {
         return workOrderVO;

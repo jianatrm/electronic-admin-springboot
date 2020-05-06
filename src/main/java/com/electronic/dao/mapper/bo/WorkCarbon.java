@@ -9,6 +9,8 @@ public class WorkCarbon {
 
     private Integer userId;
 
+    private Integer nodeId;
+
     private String remark;
 
     private Date createTime;
@@ -35,6 +37,14 @@ public class WorkCarbon {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Integer getNodeId() {
+        return nodeId;
+    }
+
+    public void setNodeId(Integer nodeId) {
+        this.nodeId = nodeId;
     }
 
     public String getRemark() {
