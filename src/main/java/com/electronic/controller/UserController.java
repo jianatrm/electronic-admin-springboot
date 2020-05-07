@@ -47,11 +47,13 @@ public class UserController {
         BaseResponse baseResponse = new BaseResponse(BusinessConstants.BUSI_FAILURE,BusinessConstants.BUSI_FAILURE_CODE,BusinessConstants.BUSI_FAILURE_MESSAGE);
 
         String userName = userRequest.getUserName();
+        String staffName = userRequest.getStaffName();
         SysUser sysUser = new SysUser();
         sysUser.setUserName(userName);
+        sysUser.setStaffName(staffName);
         SysUser selectSysUser = sysUserService.selectSysUser(sysUser);
         if (selectSysUser!=null){
-            baseResponse.setResultMessage("用户名已存在/或者真实姓名已存在");
+            baseResponse.setResultMessage("用户名已存在/真实姓名已存在");
             return baseResponse;
         }
 

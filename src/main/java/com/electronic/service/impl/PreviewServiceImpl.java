@@ -1,4 +1,3 @@
-/*
 
 package com.electronic.service.impl;
 
@@ -73,10 +72,7 @@ public class PreviewServiceImpl implements PreviewService {
     return fileConvertResultDTO;
   }
 
-*/
-/**
-   * 获取想要转换的格式类型
-   * @return*//*
+
 
 
 
@@ -95,4 +91,3 @@ public class PreviewServiceImpl implements PreviewService {
     }
   }
 }
-*/
