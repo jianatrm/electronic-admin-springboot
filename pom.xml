@@ -232,7 +232,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-<!--        <finalName>electronic</finalName>-->
+        <finalName>electronic-01</finalName>
     </build>
 
     <profiles>

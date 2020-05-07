@@ -17,6 +17,8 @@ public interface ElectronicDocService {
 
     public Integer updateElectronicDoc(ElectronicDoc doc) throws Exception;
 
+    public Integer deleteElectronicDoc(ElectronicDocRequest doc) throws Exception;
+
     public BaseResponse<PageResult<SUserElectronicDoc>> queryElectronicDoc(ElectronicDocRequest docRequest) throws Exception;
 
 }

@@ -6,10 +6,7 @@ import com.electronic.base.PageResult;
 import com.electronic.base.VO.ElectronicDocRequest;
 import com.electronic.contants.BusinessConstants;
 import com.electronic.contants.UserConstants;
-import com.electronic.dao.mapper.bo.DeptElectronicDoc;
-import com.electronic.dao.mapper.bo.ElectronicDoc;
-import com.electronic.dao.mapper.bo.ElectronicDocExample;
-import com.electronic.dao.mapper.bo.UserElectronicDoc;
+import com.electronic.dao.mapper.bo.*;
 import com.electronic.dao.mapper.interfaces.DeptElectronicDocMapper;
 import com.electronic.dao.mapper.interfaces.ElectronicDocMapper;
 import com.electronic.dao.mapper.interfaces.UserElectronicDocMapper;
@@ -109,6 +106,19 @@ public class ElectronicDocServiceImpl implements ElectronicDocService {
         doc.setOperateTime(new Date());
         int updateByPrimaryKeySelective = docMapper.updateByPrimaryKeySelective(doc);
         return updateByPrimaryKeySelective;
+    }
+
+    @Override
+    public Integer deleteElectronicDoc(ElectronicDocRequest electronicDocRequest) throws Exception {
+        UserElectronicDocExample userElectronicDocExample = new UserElectronicDocExample();
+        UserElectronicDocExample.Criteria criteria = userElectronicDocExample.createCriteria();
+        criteria.andDocIdEqualTo(electronicDocRequest.getDocId());
+        criteria.andUserIdEqualTo(electronicDocRequest.getUserId());
+        List<UserElectronicDoc> userElectronicDocs = userElectronicDocMapper.selectByExample(userElectronicDocExample);
+        UserElectronicDoc userElectronicDoc = userElectronicDocs.get(0);
+        userElectronicDoc.setStatus(0);
+        int delete = userElectronicDocMapper.updateByPrimaryKeySelective(userElectronicDoc);
+        return delete;
     }
 
     @Override

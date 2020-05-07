@@ -71,7 +71,7 @@ public class DeptController {
         String deptName = deptRequest.getDeptName();
         sysDept.setDeptName(deptName);
         SysDept selectSysDept = sysDeptService.selectSysDept(sysDept);
-        if (!selectSysDept.getDeptId().equals(deptRequest.getDeptId())){
+        if (null!=selectSysDept&&!selectSysDept.getDeptId().equals(deptRequest.getDeptId())){
             baseResponse.setResultMessage("部门已存在");
             return baseResponse;
         }

@@ -88,4 +88,26 @@ public class ElectronicDocController {
         return baseResponse;
     }
 
+
+    /*
+   删除ElectronicDoc
+    */
+    @RequestMapping("deleteElectronicDoc")
+    public BaseResponse deleteElectronicDoc(@RequestBody ElectronicDocRequest ElectronicDocRequest) {
+        BaseResponse baseResponse = new BaseResponse(BusinessConstants.BUSI_FAILURE,BusinessConstants.BUSI_FAILURE_CODE,BusinessConstants.BUSI_FAILURE_MESSAGE);
+
+        Integer integer = null;
+        try {
+            SessionUser sessionUser = SessionUtils.getSessionUser();
+            ElectronicDocRequest.setUserId(sessionUser.getUserId());
+            integer = ElectronicDocService.deleteElectronicDoc(ElectronicDocRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (integer>0){
+            baseResponse = new BaseResponse(BusinessConstants.BUSI_SUCCESS,BusinessConstants.BUSI_SUCCESS_CODE,BusinessConstants.BUSI_SUCCESS_MESSAGE);
+        }
+        return baseResponse;
+    }
+
 }
