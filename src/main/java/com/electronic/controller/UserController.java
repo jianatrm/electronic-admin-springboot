@@ -76,7 +76,17 @@ public class UserController {
     @RequestMapping("updateuser")
     public BaseResponse updateuser(@RequestBody UserRequest userRequest) throws Exception {
         BaseResponse baseResponse = new BaseResponse(BusinessConstants.BUSI_FAILURE,BusinessConstants.BUSI_FAILURE_CODE,BusinessConstants.BUSI_FAILURE_MESSAGE);
+        String userName = userRequest.getUserName();
+        String staffName = userRequest.getStaffName();
         SysUser sysUser = new SysUser();
+        sysUser.setUserName(userName);
+        sysUser.setStaffName(staffName);
+        SysUser selectSysUser = sysUserService.selectSysUser(sysUser);
+        if (!selectSysUser.getUserId().equals(userRequest.getUserId())){
+            baseResponse.setResultMessage("登录账户已存在/真实姓名已存在");
+            return baseResponse;
+        }
+
         BeanUtils.copyProperties(userRequest,sysUser);
         SessionUser sessionUser = SessionUtils.getSessionUser();
         sysUser.setOperator(String.valueOf(sessionUser.getUserId()));
