@@ -5,6 +5,7 @@ import com.electronic.base.PageResult;
 import com.electronic.base.SessionUser;
 import com.electronic.base.VO.SUserElectronicDocRequest;
 import com.electronic.contants.BusinessConstants;
+import com.electronic.contants.UserConstants;
 import com.electronic.dao.mapper.bo.*;
 import com.electronic.dao.mapper.interfaces.*;
 import com.electronic.dao.smapper.bo.SDeptElectronicDoc;
@@ -79,6 +80,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         UserElectronicDocExample userElectronicDocExample = new UserElectronicDocExample();
         UserElectronicDocExample.Criteria userElectronicDocExampleCriteria = userElectronicDocExample.createCriteria();
         userElectronicDocExampleCriteria.andUserIdEqualTo(userId);
+        userElectronicDocExampleCriteria.andStatusEqualTo(UserConstants.VALID_STATUS);
         int userCount = userElectronicDocMapper.countByExample(userElectronicDocExample);
 
         DeptElectronicDocExample deptElectronicDocExample = new DeptElectronicDocExample();
