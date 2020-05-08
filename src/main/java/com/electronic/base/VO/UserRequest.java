@@ -42,6 +42,16 @@ public class UserRequest {
 
     private SysDept sysDept;
 
+    private String operType;
+
+    public String getOperType() {
+        return operType;
+    }
+
+    public void setOperType(String operType) {
+        this.operType = operType;
+    }
+
     public SysDept getSysDept() {
         return sysDept;
     }

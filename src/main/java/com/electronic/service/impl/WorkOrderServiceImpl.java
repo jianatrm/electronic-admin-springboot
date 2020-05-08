@@ -319,10 +319,12 @@ public class WorkOrderServiceImpl implements WorkOrderService {
             Integer workOrderId = workCarbonList.get(i).getWorkOrderId();
             WorkOrder workOrder = workOrderMapper.selectByPrimaryKey(workOrderId);
             WorkOrderVO work = new WorkOrderVO();
-            BeanUtils.copyProperties(workOrder, work);
-            work.setWorkOrderStatusDesc(WorkOrderConstants.getStatus(workOrder.getWorkOrderStatus()));
-            SysUser sysUser = sysUserMapper.selectByPrimaryKey(Integer.parseInt(workOrder.getOrganizer()));
-            work.setUserName(sysUser.getStaffName());
+            if (null!=workOrder){
+                BeanUtils.copyProperties(workOrder, work);
+                work.setWorkOrderStatusDesc(WorkOrderConstants.getStatus(workOrder.getWorkOrderStatus()));
+                SysUser sysUser = sysUserMapper.selectByPrimaryKey(Integer.parseInt(workOrder.getOrganizer()));
+                work.setUserName(sysUser.getStaffName());
+            }
             carbonVO.setWorkOrderVO(work);
             workCarbonVOS.add(carbonVO);
         }

@@ -68,12 +68,14 @@ public class DeptController {
     public BaseResponse updateDept(@RequestBody DeptRequest deptRequest) throws Exception {
         BaseResponse baseResponse = new BaseResponse(BusinessConstants.BUSI_FAILURE,BusinessConstants.BUSI_FAILURE_CODE,BusinessConstants.BUSI_FAILURE_MESSAGE);
         SysDept sysDept = new SysDept();
-        String deptName = deptRequest.getDeptName();
-        sysDept.setDeptName(deptName);
-        SysDept selectSysDept = sysDeptService.selectSysDept(sysDept);
-        if (null!=selectSysDept&&!selectSysDept.getDeptId().equals(deptRequest.getDeptId())){
-            baseResponse.setResultMessage("部门已存在");
-            return baseResponse;
+        if (!deptRequest.getOperType().equals("1")){
+            String deptName = deptRequest.getDeptName();
+            sysDept.setDeptName(deptName);
+            SysDept selectSysDept = sysDeptService.selectSysDept(sysDept);
+            if (null!=selectSysDept&&!selectSysDept.getDeptId().equals(deptRequest.getDeptId())){
+                baseResponse.setResultMessage("部门已存在");
+                return baseResponse;
+            }
         }
         BeanUtils.copyProperties(deptRequest,sysDept);
         SessionUser sessionUser = SessionUtils.getSessionUser();

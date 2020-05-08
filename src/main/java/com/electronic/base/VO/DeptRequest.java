@@ -27,6 +27,15 @@ public class DeptRequest {
 
     private String status;
 
+    private String operType;
+
+    public String getOperType() {
+        return operType;
+    }
+
+    public void setOperType(String operType) {
+        this.operType = operType;
+    }
 
     public String getStatus() {
         return status;

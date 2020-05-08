@@ -25,7 +25,7 @@ spring:
     # connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
 
 server:
-  port: 80
+  port: 8001
   servlet:
     context-path: /electronic
 
