@@ -80,7 +80,7 @@ public class UserController {
         String staffName = userRequest.getStaffName();
         SysUser sysUser = new SysUser();
 
-        if (!userRequest.getOperType().equals("1")){
+        if (StringUtils.isBlank(userRequest.getOperType())){
             sysUser.setUserName(userName);
             sysUser.setStaffName(staffName);
             SysUser selectSysUser = sysUserService.selectSysUser(sysUser);

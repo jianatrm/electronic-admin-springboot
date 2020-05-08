@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/user")
-public class LoginController {
+public class  LoginController {
 
     @Autowired
     private StatisticsService statisticsService;

@@ -8,6 +8,7 @@ import com.electronic.contants.BusinessConstants;
 import com.electronic.dao.mapper.bo.SysDept;
 import com.electronic.service.SysDeptService;
 import com.electronic.utils.SessionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -68,7 +69,7 @@ public class DeptController {
     public BaseResponse updateDept(@RequestBody DeptRequest deptRequest) throws Exception {
         BaseResponse baseResponse = new BaseResponse(BusinessConstants.BUSI_FAILURE,BusinessConstants.BUSI_FAILURE_CODE,BusinessConstants.BUSI_FAILURE_MESSAGE);
         SysDept sysDept = new SysDept();
-        if (!deptRequest.getOperType().equals("1")){
+        if (StringUtils.isBlank(deptRequest.getOperType())){
             String deptName = deptRequest.getDeptName();
             sysDept.setDeptName(deptName);
             SysDept selectSysDept = sysDeptService.selectSysDept(sysDept);
