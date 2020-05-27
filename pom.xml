@@ -238,7 +238,7 @@
         <profile>
             <id>win</id>
             <properties>
-                <office.home>C:/Program Files/LibreOffice</office.home>
+                <office.home>D:/Program Files/LibreOffice</office.home>
                 <store.path>D:/file/</store.path>
             </properties>
             <activation>

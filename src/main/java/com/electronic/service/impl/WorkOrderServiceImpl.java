@@ -111,7 +111,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
         WorkOrderExample.Criteria criteria = WorkOrderExample.createCriteria();
         criteria.andOrganizerEqualTo(workOrderVO.getOrganizer());
         if (workOrderVO.getWorkOrderStatus()>0){
-            criteria.andWorkOrderStatusNotEqualTo(workOrderVO.getWorkOrderStatus());
+            criteria.andWorkOrderStatusEqualTo(workOrderVO.getWorkOrderStatus());
         }
         WorkOrderExample.setOrderByClause("operate_time desc");
         PageHelper.startPage(workOrderVO.getPageNum(), workOrderVO.getPageSize());

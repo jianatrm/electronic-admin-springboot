@@ -1,9 +1,9 @@
 spring:
   datasource:
     #url: jdbc:oracle:thin:@39.106.213.8:1521:orcl
-    url: jdbc:mysql://47.92.246.61:3306/electronic?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://127.0.0.1:3306/electronic?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: 123456
+    password: 123.Com
     username: root
     type: com.alibaba.druid.pool.DruidDataSource
     #   数据源其他配置
@@ -25,7 +25,7 @@ spring:
     # connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
 
 server:
-  port: 8001
+  port: 80
   servlet:
     context-path: /electronic
 
