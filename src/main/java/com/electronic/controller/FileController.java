@@ -38,7 +38,7 @@ public class FileController {
         String extension = FileUtil.getExtension(fileName);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/file/downloadFile/")
-                .path(fileName)
+                .path(fileName.split("&&")[0])
                 .toUriString();
 
         baseResponse.setResult(new UploadFileResponse(fileName,fileDownloadUri,extension,0));
@@ -73,7 +73,7 @@ public class FileController {
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
                 .body(resource);
     }
 }
