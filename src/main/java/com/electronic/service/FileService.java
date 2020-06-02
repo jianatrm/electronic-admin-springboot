@@ -1,7 +1,10 @@
 package com.electronic.service;
 
 import com.electronic.base.FileException;
+import com.electronic.dao.mapper.bo.DocHistory;
+import com.electronic.dao.mapper.interfaces.DocHistoryMapper;
 import com.electronic.properties.FileProperties;
+import com.electronic.utils.FileUtil;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -23,6 +26,9 @@ import java.util.UUID;
 public class FileService {
 
     private final Path fileStorageLocation; // 文件在本地存储的地址
+
+    @Autowired
+    private DocHistoryMapper docHistoryMapper;
 
     @Autowired
     public FileService(FileProperties fileProperties) {
@@ -49,11 +55,22 @@ public class FileService {
             if(fileName.contains("..")) {
                 throw new FileException("Sorry! Filename contains invalid path sequence " + fileName);
             }
+            String extension = FileUtil.getExtension(fileName);
             String uuid = UUID.randomUUID().toString();
             uuid = uuid.replace("-", "");
+            try{
+                DocHistory docHistory = new DocHistory();
+                docHistory.setHistoryId(uuid);
+                docHistory.setDocName(fileName);
+                docHistoryMapper.insertSelective(docHistory);
+            }catch (Exception e){
+
+            }
+
+
             fileName = uuid+"&&"+fileName;
             // Copy file to the target location (Replacing existing file with the same name)
-            Path targetLocation = this.fileStorageLocation.resolve(uuid);
+            Path targetLocation = this.fileStorageLocation.resolve(uuid+"."+extension);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
             return fileName;

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.electronic.dao.mapper.interfaces.DocHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.electronic.dao.mapper.bo.DocHistory" >
+    <id column="history_id" property="historyId" jdbcType="VARCHAR" />
+    <result column="doc_name" property="docName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    history_id, doc_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.electronic.dao.mapper.bo.DocHistoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from doc_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from doc_history
+    where history_id = #{historyId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from doc_history
+    where history_id = #{historyId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.electronic.dao.mapper.bo.DocHistoryExample" >
+    delete from doc_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.electronic.dao.mapper.bo.DocHistory" >
+    insert into doc_history (history_id, doc_name)
+    values (#{historyId,jdbcType=VARCHAR}, #{docName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.electronic.dao.mapper.bo.DocHistory" >
+    insert into doc_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="historyId != null" >
+        history_id,
+      </if>
+      <if test="docName != null" >
+        doc_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="historyId != null" >
+        #{historyId,jdbcType=VARCHAR},
+      </if>
+      <if test="docName != null" >
+        #{docName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.electronic.dao.mapper.bo.DocHistoryExample" resultType="java.lang.Integer" >
+    select count(*) from doc_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update doc_history
+    <set >
+      <if test="record.historyId != null" >
+        history_id = #{record.historyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docName != null" >
+        doc_name = #{record.docName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update doc_history
+    set history_id = #{record.historyId,jdbcType=VARCHAR},
+      doc_name = #{record.docName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.electronic.dao.mapper.bo.DocHistory" >
+    update doc_history
+    <set >
+      <if test="docName != null" >
+        doc_name = #{docName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where history_id = #{historyId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.electronic.dao.mapper.bo.DocHistory" >
+    update doc_history
+    set doc_name = #{docName,jdbcType=VARCHAR}
+    where history_id = #{historyId,jdbcType=VARCHAR}
+  </update>
+</mapper>
