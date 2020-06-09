@@ -98,4 +98,17 @@ public class WorkOrderController {
         return baseResponse;
     }
 
+
+    @RequestMapping("/deleteWorkOrder")
+    public BaseResponse deleteWorkOrder(@RequestBody WorkOrderVO workOrderVO) throws Exception {
+        BaseResponse baseResponse = new BaseResponse(BusinessConstants.BUSI_FAILURE,BusinessConstants.BUSI_FAILURE_CODE,BusinessConstants.BUSI_FAILURE_MESSAGE);
+        SessionUser sessionUser = SessionUtils.getSessionUser();
+        workOrderVO.setOrganizer(String.valueOf(sessionUser.getUserId()));
+        Integer integer = workOrderService.deleteWorkOrder(workOrderVO);
+        if (integer>0){
+            baseResponse = new BaseResponse(BusinessConstants.BUSI_SUCCESS,BusinessConstants.BUSI_SUCCESS_CODE,BusinessConstants.BUSI_SUCCESS_MESSAGE);
+        }
+        return baseResponse;
+    }
+
 }

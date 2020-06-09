@@ -14,6 +14,8 @@ public interface WorkOrderService {
 
     public Integer updateWorkOrder(WorkOrderVO workOrderVO) throws Exception;
 
+    public Integer deleteWorkOrder(WorkOrderVO workOrderVO) throws Exception;
+
     public BaseResponse<PageResult<WorkOrderVO>> queryWorkOrder(WorkOrderVO workOrderVO) throws Exception;
 
 
@@ -24,5 +26,7 @@ public interface WorkOrderService {
     public BaseResponse approverCarbonCopy(WorkOrderVO workOrderVO) throws Exception;
 
     public BaseResponse queryApproverCarbonCopy(WorkCarbonVO workCarbonVO) throws Exception;
+
+
 
 }

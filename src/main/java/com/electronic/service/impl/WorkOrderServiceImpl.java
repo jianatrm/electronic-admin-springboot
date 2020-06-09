@@ -104,6 +104,17 @@ public class WorkOrderServiceImpl implements WorkOrderService {
     }
 
     @Override
+    public Integer deleteWorkOrder(WorkOrderVO workOrderVO) throws Exception {
+        workOrderMapper.deleteByPrimaryKey(workOrderVO.getWorkOrderId());
+        WorkNodeExample workNodeExample = new WorkNodeExample();
+        WorkNodeExample.Criteria criteria = workNodeExample.createCriteria();
+        criteria.andWorkOrderIdEqualTo(workOrderVO.getWorkOrderId());
+        int deleteByExample = nodeMapper.deleteByExample(workNodeExample);
+
+        return deleteByExample;
+    }
+
+    @Override
     public BaseResponse<PageResult<WorkOrderVO>> queryWorkOrder(WorkOrderVO workOrderVO) throws Exception {
         BaseResponse baseResponse = new BaseResponse(BusinessConstants.BUSI_SUCCESS, BusinessConstants.BUSI_SUCCESS_CODE, BusinessConstants.BUSI_SUCCESS_MESSAGE);
         PageResult<WorkOrderVO> pageResult = new PageResult<>();
